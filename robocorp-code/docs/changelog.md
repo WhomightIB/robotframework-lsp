@@ -1,8 +1,63 @@
-New in 1.20.0 (2024-03-19)
+
+New in 1.22.3 (2024-05-22)
+-----------------------------
+
+- Improvements when running actions:
+    - Logs will show local variables (ROBOT_ROOT is no longer set).
+    - ROBOT_ARTIFACTS set to a better place for the log.html.
+    - If using `sema4ai-actions 0.7.0` or newer, the results of running an action are printed to the terminal.
+
+
+New in 1.22.2 (2024-05-20)
+-----------------------------
+
+- If `Action Server 0.10.0` onwards is being used, creates a project using the `--template minimal`.
+- In the new project, if the project is not empty and the user agreed to proceed, create the contents even if it means overriding what's there.
+
+New in 1.22.1 (2024-05-04)
+-----------------------------
+
+- `--use-feature=truststore` is no longer added to rcc conda.yaml when using uv.
+
+New in 1.22.0 (2024-05-03)
+-----------------------------
+
+- Updated RCC to `v17.28.4`. 
+
+- Fixed issue in the Caching system for the RCC Python Env. 
+
+- Added command for rebuilding the rcc environment. 
+
+- Added shortcut to the Activities for the task/action package. 
+
+- Added listeners for workspace files that trigger question for user to rebuild env or refresh view
+
+- Activating the Terminal command. Correcting the environment injection to have the proper Python env set up
+
+- Terminal opens CMD Prompt for Windows (environment activation is better)
+
+- Added new param to rcc `--no-pyc-management`.
+
+New in 1.21.0 (2024-04-25)
+-----------------------------
+
+- `sema4ai-actions` is now supported (`robocorp-actions` is still supported, although it's
+  now considered deprecated as `sema4ai-actions` is a drop-in replacement).
+
+New in 1.20.2 (2024-04-23)
+-----------------------------
+
+- Fixed issue where automatically installing browser would fail (on Windows).
+
+New in 1.20.1 (2024-04-12)
 -----------------------------
 
 - New Java Inspector available!
     - The Java Inspector will be supported only on Windows OS.
+- (Action Package support) Properly supports robocorp-actions 0.2.0 (for linting actions).
+- (Action Package support) When subitems of a task package are selected it's possible that the work-items aren't shown in the package tree.
+- (Action Package support) Preferred action server version is now 0.3.2.
+- Updated dependency versions (to fix CVEs).
 
 New in 1.19.0 (2024-03-12)
 -----------------------------

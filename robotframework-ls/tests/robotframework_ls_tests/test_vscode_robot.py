@@ -667,6 +667,46 @@ List Variable
     assert "var2" in labels
 
 
+def test_variablefiles_completions_integrated_using_config(
+    language_server_tcp: ILanguageServerClient, ws_root_path, data_regression, tmpdir
+):
+    filename = tmpdir.join("my.py")
+    filename.write_text(
+        """
+V_NAME='value'
+V_NAME1='value 1'
+var2='value var2'
+""",
+        encoding="utf-8",
+    )
+
+    from robocorp_ls_core.workspace import Document
+
+    language_server = language_server_tcp
+    language_server.initialize(ws_root_path, process_id=os.getpid())
+    uri = "untitled:Untitled-1"
+    language_server.open_doc(uri, 1)
+    contents = """
+
+*** Test Cases ***
+List Variable
+    Should Contain    ${"""
+    language_server.change_doc(uri, 2, contents)
+
+    language_server_tcp.settings(
+        {"settings": {"robot": {"loadVariablesFromVariablesFile": str(filename)}}}
+    )
+
+    doc = Document("", source=contents)
+    line, col = doc.get_last_line_col()
+
+    completions = language_server.get_completions(uri, line, col)
+    labels = [x["label"] for x in completions["result"]]
+    assert "V_NAME" in labels
+    assert "V_NAME1" in labels
+    assert "var2" in labels
+
+
 def test_variables_resolved_on_completion_integrated(
     language_server_tcp: ILanguageServerClient, workspace_dir, data_regression, cases
 ):
@@ -1961,7 +2001,10 @@ def test_rf_interactive_integrated_hook_robocorp_update_env(
     language_server.initialize(
         workspace_dir,
         process_id=os.getpid(),
-        initialization_options={"pluginsDir": str(plugins_path)},
+        initialization_options={
+            "pluginsDir": str(plugins_path),
+            "integrationOption": "robocorp",
+        },
     )
 
     p = Path(workspace_dir) / "env1" / "caselib1.robot"

@@ -20,7 +20,7 @@ if (process.platform === "win32") {
 }
 
 // Update so that Robocorp Code requests the latest version of the action server.
-const LATEST_ACTION_SERVER_VERSION = "0.0.28";
+const LATEST_ACTION_SERVER_VERSION = "0.3.2";
 
 async function downloadActionServer(internalActionServerLocation: string) {
     await window.withProgress(
@@ -48,7 +48,7 @@ const getInternalActionServerLocation = async (tmpFlag: string = "") => {
     return path.join(await getInternalActionServerDirLocation(), binName);
 };
 
-const getActionServerVersion = async (actionServerLocation: string): Promise<string | undefined> => {
+export const getActionServerVersion = async (actionServerLocation: string): Promise<string | undefined> => {
     let result: ExecFileReturn;
     const maxTimes = 4;
     let lastError = undefined;
